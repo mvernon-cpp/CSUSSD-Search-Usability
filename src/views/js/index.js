@@ -11,9 +11,8 @@ import {
   prestudyQuestions,
 } from "./prestudy.js"
 
-// const CSUSSD_URL = "http://127.0.0.1:8000"
-const CSUSSD_URL = "http://localhost:8000"
-// const CSUSSD_URL = "https://csusuccess.dashboards.calstate.edu"
+const CSUSSD_URL_SEARCH_ON = "http://localhost:8000?searchFeature=true"
+const CSUSSD_URL_SEARCH_OFF = "http://localhost:8000?searchFeature=false"
 
 document.addEventListener('DOMContentLoaded', () => {
   // on-launch elements
@@ -415,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function displayNextQuestion() {
     //Set iframe source to homepage for each question - resets view
-    iframeElement.src = `${CSUSSD_URL}`;
+    iframeElement.src = `${CSUSSD_URL_SEARCH_ON}`; //CSUSSD_URL_SEARCH_ON
 
     const currentQuestionObj = data2DArray[currentQuestionIndex];
 
@@ -464,19 +463,6 @@ document.addEventListener('DOMContentLoaded', () => {
         hideFrqInput();
     }
     
-    
-    // // Initialize Options
-    // optionsElement.innerHTML = "";
-    // options.forEach((option, index) => {
-    //   const label = document.createElement("label");
-    //   const input = document.createElement("input");
-    //   input.type = "radio";
-    //   input.name = "answer";
-    //   input.value = option;
-    //   label.appendChild(input);
-    //   label.appendChild(document.createTextNode(option));
-    //   optionsElement.appendChild(label);
-    // });
   }
 
   
