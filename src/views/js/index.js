@@ -87,14 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
   beginPrestudyButton.addEventListener('click', async () => {
     hideHomeScreen();
     
-    // showPrestudyScreen();
-    // displayNextPrestudyQuestion();  
-
-    // uncomment for main study
-
-    await loadStudyQuestions(); 
-    showMainStudyScreen();
-    displayNextQuestion();   
+    showPrestudyScreen();
+    displayNextPrestudyQuestion();  
    
   });
 
@@ -117,11 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
   beginMainStudyButton.addEventListener("click", async () => {
     beginMainStudy();
   });
-  
-  // // Reload Button for chart
-  // reloadButton.addEventListener('click', () => {
-  //   reloadGraph();
-  // });
 
   // Submit user response and display next question
   submitButton.addEventListener("click", async () => {
@@ -237,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function showPostStudyCongrats() {
     postStudy.style.display = "block";
     postStudyCongrats.style.display = "block";
-    // questionElement.innerHTML = "Study complete. Thank you for participating!";
   }
 
   function triggerCalibration() {
@@ -321,7 +309,6 @@ document.addEventListener('DOMContentLoaded', () => {
    *  Handles logic for submitting mainstudy Questions
    */
   async function handleMainstudyQuestionSubmit() {
-    console.log(document.querySelectorAll('input[type="checkbox"]:checked'))
    
     if ( document.querySelectorAll('input[type="checkbox"]:checked').length === 0 && !document.querySelector('input[name="answer"]:checked')) {
       alert("Please select an answer.");
@@ -340,14 +327,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentAnswer.value = frqInput.value;
       }
       else if (answerType === "select_all") {
-        console.log(answerType)
         const checked = document.querySelectorAll('input[type="checkbox"]:checked')
         selected = Array.from(checked).map(x => x.value)
         currentAnswer.value = selected.join(", "); 
-        console.log(currentAnswer.value)
    }
       else { //answerType === "multiple_choice" || "true_false"
-        console.log(answerType)
+        // console.log(answerType)
         currentAnswer.value = document.querySelector(
           'input[name="answer"]:checked'
         ).value;
@@ -393,7 +378,6 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function displayNextPrestudyQuestion() {
     prestudyQuestionElement.innerHTML = currentQuestion.value = prestudyUserQuestions[currentPrestudyQuestionIndex][0];
-    // prestudyQuestionElement.innerHTML = prestudyUserQuestions[currentPrestudyQuestionIndex][0];
     prestudyChart.innerHTML = "";
   
     var imageElement = document.createElement("img");
@@ -413,9 +397,17 @@ document.addEventListener('DOMContentLoaded', () => {
    * Display next Question in question array
    */
   function displayNextQuestion() {
-    //Set iframe source to homepage for each question - resets view
-    iframeElement.src = `${CSUSSD_URL_SEARCH_ON}`; //CSUSSD_URL_SEARCH_ON
 
+    console.log(currentQuestionIndex);
+
+    //Set iframe source to homepage for each question - resets view
+     if (currentQuestionIndex > 7)
+     {iframeElement.src = `${CSUSSD_URL_SEARCH_ON}`;}
+     else{
+      iframeElement.src = `${CSUSSD_URL_SEARCH_OFF}`;
+     }
+
+   
     const currentQuestionObj = data2DArray[currentQuestionIndex];
 
     let options = currentQuestionObj["question_options"];
