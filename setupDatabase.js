@@ -101,6 +101,7 @@ async function insertData() {
             const sequential_questions = questions["sequential_questions"];
 
             const questionsToInsert = sequential_questions.map(question => ({
+                question_id: question.question_id,
                 chart_endpoint: question.chart_endpoint,
                 filter_options: question.filter_options,
                 question_text: question.question_text,

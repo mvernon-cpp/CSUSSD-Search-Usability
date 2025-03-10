@@ -2,10 +2,13 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Question = sequelize.define('Question', {
-	question_id: {
+	id: {
 		type: DataTypes.INTEGER,
 		primaryKey: true,
 		autoIncrement: true
+	},
+	question_id: {
+		type: DataTypes.TEXT
 	},
 	chart_endpoint: {
 		type: DataTypes.TEXT,
@@ -32,7 +35,7 @@ const Question = sequelize.define('Question', {
 		allowNull: true
 	},
 }, {
-	tableName: 'usability_questions',
+	tableName: 'questions',
 	timestamps: true
 });
 

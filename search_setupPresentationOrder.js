@@ -12,10 +12,10 @@ async function setUpQuestionOrder() {
     questionOrders['secondOrder'] = []
 
     const questionIds = await Question.findAll({
-        attributes: ['question_id']
+        attributes: ['id']
     })
 
-    const allQuestionIds = questionIds.map(question => question.question_id);
+    const allQuestionIds = questionIds.map(question => question.id);
 
     if (allQuestionIds) {
 

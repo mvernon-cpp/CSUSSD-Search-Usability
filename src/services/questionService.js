@@ -25,7 +25,7 @@ class QuestionService {
             
             const questionSet = await Question.findAll({
                 where: {
-                    question_id: {
+                    id: {
                         [Op.in]: questionOrder
                     }
                 }
@@ -37,6 +37,7 @@ class QuestionService {
             
             const formattedQuestions = orderedQuestionSet.map(question => {
                 return {
+                    id: question.id,
                     question_id: question.question_id,
                     chart_endpoint: question.chart_endpoint,
                     filter_options: question.filter_options,
