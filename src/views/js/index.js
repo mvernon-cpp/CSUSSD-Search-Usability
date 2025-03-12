@@ -11,8 +11,9 @@ import {
   prestudyQuestions,
 } from "./prestudy.js"
 
-const CSUSSD_URL_SEARCH_ON = "http://localhost:8000?searchFeature=true"
-const CSUSSD_URL_SEARCH_OFF = "http://localhost:8000?searchFeature=false"
+const CSUSSD_URL_SEARCH_ON = "http://localhost:8000?searchFeature=true";
+const CSUSSD_URL_SEARCH_OFF = "http://localhost:8000?searchFeature=false";
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // on-launch elements
@@ -49,8 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let data2DArray = []; //stores all queries from test_questions in database locally
 
   // Mainstudy elements
-  const startCalibrationButton = document.getElementById('start-calibration-button');
-  const calibrationScreen = document.getElementById('calibration-screen');
   const beginMainStudyElement = document.getElementById('begin-main-study');
   const beginMainStudyButton = document.getElementById('begin-main-study-button');
   const mainStudy = document.getElementById('main-study');
@@ -61,10 +60,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const frqInput = document.getElementById('frq-answer');
   const optionsElement = document.getElementById('options');
   const submitButton = document.getElementById('submit-button'); 
-  let iframeElement = document.getElementById('iframe-csussd');
 
+	//Search elements
+  const searchEnabledScreen = document.getElementById('search-turned-on');
+  const searchDisabledScreen = document.getElementById('search-turned-off');
+	const searchEnabledScreenButton = document.getElementById('search-on-button');
+	const searchDisabledScreenButton = document.getElementById('search-off-button');
+	
   // Post study elements
-  const postStudyCongrats = document.getElementById('congrats-cat')
+	const postStudyCongrats = document.getElementById('congrats-cat');
+	const postStudyFeedbackButton = document.getElementById('feedback-submit-button');
+	const postStudyFeedback = document.getElementById('feedbackText');
+	const postFeedback = document.getElementById('post-feedback');
+
+	
   
 
   /** 
@@ -97,30 +106,78 @@ document.addEventListener('DOMContentLoaded', () => {
     handlePrestudyQuestionSubmit()
   });
 
-  // Step 4.5 (OPTIONAL): Switch to calibration screen when "NEXT" is clicked
-  startCalibrationButton.addEventListener('click', () => {
-    hideCalibrationScreen();
-    triggerCalibration();
+  // Step 4.5: Hide search enabled screen, user pressed continue button
+	searchEnabledScreenButton.addEventListener("click", async () => {
+		hideSearchEnabledScreen()
+		hideSearchDisabledScreen()
 
-    setTimeout(() => {
-      showBeginMainStudyScreen();
-    }, 3000); // Simulate a 3-second calibration screen
-  });
+		if( currentQuestionIndex == 0 )	{
+			beginMainStudy();
+		}
+		else {
+			showMainStudyScreen();
+			displayNextQuestion();	
+		}
+	});
+
+	// Step 4.5: Hide search disabled screen, user pressed continue button
+	searchDisabledScreenButton.addEventListener("click", async () => {
+		hideSearchDisabledScreen()
+		hideSearchEnabledScreen()
+
+		if (currentQuestionIndex == 0) {
+			beginMainStudy();
+		}
+		else {
+			showMainStudyScreen();
+			displayNextQuestion();
+		}
+	});
+
 
   // Step 5: Begin Main Study
   beginMainStudyButton.addEventListener("click", async () => {
     beginMainStudy();
   });
 
-  // Submit user response and display next question
+  //Step 6: Submit user response and display next question (repeat)
   submitButton.addEventListener("click", async () => {
     handleMainstudyQuestionSubmit();
   });
 
+	// Step 7: Handle post-feedback submission
+	postStudyFeedbackButton.addEventListener("click", async () => {
+		handlePostStudyFeedbackSubmit();
+		hideFeedback();
+		showPostStudyCongrats();
+	});
 
-  /** 
+
+  /**
    * HELPER FUNCTIONS
-   */  
+   */
+	
+	//
+	function updateIFrame(newSrc) {
+		let iframeElement = document.getElementById('iframe-csussd');
+
+		if (iframeElement === null) {
+
+			$(document).ready(function () {
+				let iframe = $('<iframe>', {
+					src: newSrc, 
+					id: "iframe-csussd",
+					title: "CSU-SSD Website",
+				});
+
+				$('#csussd-website').append(iframe);
+			});
+
+		}
+		else {
+			iframeElement.src = newSrc;
+		}
+	}
   
   function hideBeginStudyScreen() {
     beginStudyButtonWrapper.style.display = 'none';
@@ -139,14 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function hideHomeScreen() {
     homeContent.style.display = 'none';
-  }
-
-  function showCalibrationScreen(){
-    startCalibrationButton.style.display = "flex";
-  }
-
-  function hideCalibrationScreen(){
-    startCalibrationButton.style.display = "none";
   }
 
   function showPrestudyScreen() {
@@ -228,16 +277,31 @@ document.addEventListener('DOMContentLoaded', () => {
     postStudyCongrats.style.display = "block";
   }
 
-  function triggerCalibration() {
-    startCalibrationButton.style.display = "block";
-    prestudyMsgElement.textContent =
-      "Prestudy completed! When you click NEXT, you will be shown a blank screen with a tiny plus sign at the center, please focus your eyes on it for 5 seconds. ";
-    prestudyQuestionElement.innerHTML = "";
-    prestudySubmitButton.style.display = "none";
-    currentPrestudyQuestionIndex = 0;
-    prestudyChart.innerHTML = "";
-    inputElement.style.display = "none";
+  function showSearchEnabledScreen() {
+    searchEnabledScreen.style.display = "flex";
+		// console.log("search screen on")
+	}
+	
+  function hideSearchEnabledScreen() {
+    searchEnabledScreen.style.display = "none";
   }
+
+  function showSearchDisabledScreen() {
+    searchDisabledScreen.style.display = "flex";
+	  // console.log("search screen off")
+	}
+	
+  function hideSearchDisabledScreen() {
+    searchDisabledScreen.style.display = "none";
+	}
+	
+	function hideFeedback() {
+		postFeedback.style.display = "none";
+	}
+
+	function showFeedback() {
+		postFeedback.style.display = "flex";
+	}
 
   /**
    *  Setup new user procedure
@@ -290,8 +354,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     else {
       hidePrestudyScreen();
-      showCalibrationScreen();
-      showBeginMainStudyScreen();
+
+      if (testOrderId == 0) {
+				console.log("prestudy finished, showing search on. testorderid = 0")
+				showSearchEnabledScreen();
+      }
+			else {
+				console.log("prestudy finished, not showing search on. testorderid = 1")
+        showBeginMainStudyScreen();
+      }  
     }
   }
 
@@ -332,7 +403,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentAnswer.value = selected.join(", "); 
    }
       else { //answerType === "multiple_choice" || "true_false"
-        // console.log(answerType)
         currentAnswer.value = document.querySelector(
           'input[name="answer"]:checked'
         ).value;
@@ -341,11 +411,27 @@ document.addEventListener('DOMContentLoaded', () => {
       await recordMainStudyResponse(userId, currentQuestionIndex, currentQuestion, currentCorrectAnswer, currentAnswer);
       await recordInteraction(userId, "Submit", true, false, currentQuestionId, currentQuestion, currentAnswer);
 
-      currentQuestionIndex += 1;
-      displayNextQuestion()
+			currentQuestionIndex += 1;
+			
+			if (currentQuestionIndex == 8 && testOrderId == 0)
+			{
+				console.log("disable search");
+				hideMainStudyScreen();
+				showSearchDisabledScreen();
+			}
+			else if(currentQuestionIndex == 8 && testOrderId == 1)
+			{
+				console.log("enable search");
+				hideMainStudyScreen();
+				showSearchEnabledScreen();
+			}
+			else
+			{
+				displayNextQuestion()
+			}
     } else {
       hideMainStudyScreen();
-      showPostStudyCongrats();
+			showFeedback();
     }
 
     
@@ -398,15 +484,27 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function displayNextQuestion() {
 
-    console.log(currentQuestionIndex);
+		//Set iframe source to homepage for each question - resets view
 
-    //Set iframe source to homepage for each question - resets view
-     if (currentQuestionIndex > 7)
-     {iframeElement.src = `${CSUSSD_URL_SEARCH_ON}`;}
-     else{
-      iframeElement.src = `${CSUSSD_URL_SEARCH_OFF}`;
-     }
+		$(document).ready(function () {
+			if (currentQuestionIndex <= 7) {
+				if (testOrderId == 0) {
+					updateIFrame(CSUSSD_URL_SEARCH_ON);
+				}
+				else {
+					updateIFrame(CSUSSD_URL_SEARCH_OFF);
+				}
+			}
 
+			if (currentQuestionIndex > 7) {
+				if (testOrderId == 0) {
+					updateIFrame(CSUSSD_URL_SEARCH_OFF);
+				}
+				else {
+					updateIFrame(CSUSSD_URL_SEARCH_ON);
+				}
+			}
+		});
    
     const currentQuestionObj = data2DArray[currentQuestionIndex];
 
@@ -455,7 +553,34 @@ document.addEventListener('DOMContentLoaded', () => {
         hideFrqInput();
     }
     
-  }
+	}
+	
+	/**
+	 *  Handles Logic for submitting feedback
+	 *  - Checks for selected Input
+	 *  - Updates user data
+	 *  - Submits user records
+	 */
+	async function handlePostStudyFeedbackSubmit() {
+		let feedback = null;
+		const feedbackText = postStudyFeedback.value;
 
+		if (!feedbackText) {
+			alert("Please enter an answer.");
+			return;
+		} else {
+			feedback = feedbackText;
+		}
+
+		console.log(feedback);
+
+		await updateUser(userId, {
+			feedback: feedback,
+		});
+		
+		await recordInteraction(userId, "FeedbackSubmit", true, false, 17, "User feedback", feedback);
+
+		hideFeedback();
+	}
   
 });

@@ -45,27 +45,27 @@
     <input type="text" id="inputText" placeholder="Enter your answer" style="margin-bottom: 20px;"/>
 
     <button id="prestudy-submit-button" class="study-button" style="margin-bottom: 20px;">SUBMIT</button>
-    <button id="start-calibration-button" class="study-button" style="display: none;">NEXT</button>
 </div>
   
-<div id="calibration-screen" style="display: none">
-    <p>+</p>
+<div id="search-turned-on" class="search-alignment">
+    <p> The search bar in the top right of the screen has been enabled. You are encouraged to use it while available.</p>
+    <button id="search-on-button" class="search-button" style="padding: 10px 20px;">CONTINUE</button>
 </div>
-  
+
+<div id="search-turned-off"  class="search-alignment">
+    <p> The search bar has been disabled. For the remainder of the questions please use the navigation menu to answer the questions.</p>
+    <button id="search-off-button" class="search-button" style="padding: 10px 20px;">CONTINUE</button>
+</div>
+
 <div id="begin-main-study" class="begin-main-study-alignment">
     <button id="begin-main-study-button" class="study-button">BEGIN MAIN STUDY</button>
 </div>
 
 
 <div id="main-study" class="main-study">
-    <!-- <button id="reload-button" class="study-button">Reload Website</button> -->
-    <!-- <div id="study-content"> -->
         <p id="question" class="question"></p>
 
-        <div id="csussd-website">
-            <iframe id="iframe-csussd" title="CSU-SSD Website"></iframe>
-        </div>
-    <!-- </div> -->
+        <div id="csussd-website"></div>
     <div class="questionnaire">
         <div id="input">
             <div class="options-div">
@@ -81,8 +81,15 @@
     </div>
 </div>
 
-<div id="post-study" style="display:none">
-    <p class="question"> Study complete. Thank you for participating!</p>
+<div id="post-feedback" style="display:none" class="post-alignment">
+    <h1>Study complete.</h1>
+    <p>Please share any feedback about the CSU Student Success Dashboard search feature that you may have.</p>
+    <input type="text" id="feedbackText" placeholder="Your feedback" style="margin-bottom: 20px;" />
+    <button id="feedback-submit-button" class="study-button" style="margin-bottom: 20px;">SUBMIT</button>
+</div>
+
+<div id="post-study" style="display:none" class="post-alignment">
+    <h1> Thank you for participating!</h1>
     <img id="congrats-cat" src="img/happy-cat.png"></img>
 </div>
 

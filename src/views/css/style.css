@@ -1,4 +1,4 @@
-body {
+  body {
     margin: 0 auto;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     height: 100%;
@@ -20,6 +20,27 @@ body {
   }
   .begin-main-study-alignment{
     display: none;justify-content: center;align-items: center;text-align: center;  height: 100vh;
+  }
+
+  .search-alignment{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 100vh;
+    text-align: center;
+    font-size: 1.5em;
+  }
+
+  .post-alignment{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 100vh;
+    text-align: center;
   }
 
   .main-study {
@@ -52,6 +73,7 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
 
+  .search-button,
   .study-button{
     background-image: linear-gradient(to bottom right, salmon, darkred);
     border: none;
