@@ -3,13 +3,19 @@ import {
   recordMainStudyResponse,
 } from "./mainstudy.js"
 
-import { 
+import {
   recordInteraction,
   recordPrestudyResponse,
   createNewUser,
   updateUser,
   prestudyQuestions,
 } from "./prestudy.js"
+
+import {
+  recordFeedbackResponse,
+  feeedbackWithoutSearchQuestions,
+  feeedbackWithSearchQuestions,
+} from "./feedback.js"
 
 const CSUSSD_URL_SEARCH_ON = "http://localhost:8000?searchFeature=true";
 const CSUSSD_URL_SEARCH_OFF = "http://localhost:8000?searchFeature=false";
@@ -41,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mainstudy Variables
   let userId = null;
-  // let currentGraphId = null;
   let currentQuestionId = null;
   let currentQuestionName = null;
   let currentQuestionIndex = 0;
@@ -69,13 +74,18 @@ document.addEventListener('DOMContentLoaded', () => {
 	
   // Post study elements
 	const postStudyCongrats = document.getElementById('congrats-cat');
-	const postStudyFeedbackButton = document.getElementById('feedback-submit-button');
-	const postStudyFeedback = document.getElementById('feedbackText');
-	const postFeedback = document.getElementById('post-feedback');
-
-	
   
+  //Feedback elements
+  const feedbackAboutSearch = document.getElementById('feedback-about-search');
+  const feedbackSubmitButton = document.getElementById('feedback-submit-button');
+  const feedbackQuestionElement = document.getElementById('feedback-question');
+  const feedbackFrqElement = document.getElementById('feedback-frq');
+  const feedbackOptionsElement = document.getElementById('feedback-agree-options');
 
+  //Feedback variables
+  let currentFeedbackQuestionIndex = 0;
+  let searchOn = 0;
+	
   /** 
    * EVENT HANDLERS
    */  
@@ -134,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-
   // Step 5: Begin Main Study
   beginMainStudyButton.addEventListener("click", async () => {
     beginMainStudy();
@@ -145,19 +154,17 @@ document.addEventListener('DOMContentLoaded', () => {
     handleMainstudyQuestionSubmit();
   });
 
-	// Step 7: Handle post-feedback submission
-	postStudyFeedbackButton.addEventListener("click", async () => {
-		handlePostStudyFeedbackSubmit();
-		hideFeedback();
-		showPostStudyCongrats();
-	});
+  //Step 7: Handle mid- and post-feedback submission
+  feedbackSubmitButton.addEventListener("click", async () => {
+    handleFeedbackSubmit();
+  });
 
 
   /**
    * HELPER FUNCTIONS
    */
 	
-	//
+	// Refreshes IFrame of CSU-SSD with either search feature turned on or off
 	function updateIFrame(newSrc) {
 		let iframeElement = document.getElementById('iframe-csussd');
 
@@ -294,15 +301,40 @@ document.addEventListener('DOMContentLoaded', () => {
   function hideSearchDisabledScreen() {
     searchDisabledScreen.style.display = "none";
 	}
-	
-	function hideFeedback() {
-		postFeedback.style.display = "none";
-	}
+  
+  function hideFeedbackAboutSearch() {
+    feedbackAboutSearch.style.display = "none";
+  }
 
-	function showFeedback() {
-		postFeedback.style.display = "flex";
-	}
+  function showFeedbackAboutSearch() {
+    feedbackAboutSearch.style.display = "flex";
+  }
 
+  function showFeedbackOptions() {
+    feedbackOptionsElement.style.display = "block";
+  }
+
+  function hideFeedbackOptions() {
+    feedbackOptionsElement.style.display = "none";
+    feedbackOptionsElement.value = "";
+  }
+
+  function clearFeedbackOptions() {
+    document.querySelector('input[name="feedback-option"]:checked').checked = false;
+  }
+
+  function showFeedbackFrq() {
+    feedbackFrqElement.style.display = "flex";
+  }
+  
+  function hideFeedbackFrq() {
+    feedbackFrqElement.style.display = "none";
+  }
+  
+  function clearFeedbackFrq() {
+    feedbackFrqElement.value = "";
+  }
+  
   /**
    *  Setup new user procedure
    *  - Create new User in User database
@@ -387,7 +419,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // currentQuestionIndex += 1;
     let selected = []; //used for answerType select_all
     
     if (currentQuestionIndex < data2DArray.length) {
@@ -411,19 +442,21 @@ document.addEventListener('DOMContentLoaded', () => {
       await recordMainStudyResponse(userId, currentQuestionIndex, currentQuestion, currentCorrectAnswer, currentAnswer);
       await recordInteraction(userId, "Submit", true, false, currentQuestionId, currentQuestion, currentAnswer);
 
-			currentQuestionIndex += 1;
+      currentQuestionIndex++;
 			
 			if (currentQuestionIndex == 8 && testOrderId == 0)
 			{
-				console.log("disable search");
-				hideMainStudyScreen();
-				showSearchDisabledScreen();
+        hideMainStudyScreen();
+
+        showFeedbackAboutSearch();
+        displayNextFeedbackQuestion();
 			}
 			else if(currentQuestionIndex == 8 && testOrderId == 1)
 			{
-				console.log("enable search");
-				hideMainStudyScreen();
-				showSearchEnabledScreen();
+        hideMainStudyScreen();
+
+        showFeedbackAboutSearch();
+        displayNextFeedbackQuestion();
 			}
 			else
 			{
@@ -431,7 +464,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
     } else {
       hideMainStudyScreen();
-			showFeedback();
+
+      currentFeedbackQuestionIndex = 0;
+      showFeedbackAboutSearch();
+      displayNextFeedbackQuestion();
     }
 
     
@@ -465,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function displayNextPrestudyQuestion() {
     prestudyQuestionElement.innerHTML = currentQuestion.value = prestudyUserQuestions[currentPrestudyQuestionIndex][0];
     prestudyChart.innerHTML = "";
-  
+
     var imageElement = document.createElement("img");
     if (prestudyUserQuestions[currentPrestudyQuestionIndex][1] != null) {
       imageElement.src =
@@ -477,6 +513,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     currentPrestudyQuestionIndex++;
+  }
+
+  /**
+   *  Display next feedback question
+   */
+  function displayNextFeedbackQuestion() {
+
+    if ((currentQuestionIndex <= 8 && testOrderId == 0) || (currentQuestionIndex >= 15 && testOrderId == 1)) {
+      // console.log("SEARCH ON: either mid way for testorderID 0 or at end for testOrderID 1");
+      searchOn = 1;
+
+      feedbackQuestionElement.innerHTML = currentQuestion.value = feeedbackWithSearchQuestions[currentFeedbackQuestionIndex][0]
+
+      if (feeedbackWithSearchQuestions[currentFeedbackQuestionIndex][1] == 0) {
+        showFeedbackOptions();
+      }
+      else {
+        showFeedbackFrq();
+      }
+    }
+    
+    if ((currentQuestionIndex <= 8 && testOrderId == 1) || (currentQuestionIndex >= 15 && testOrderId == 0)) {
+      // console.log("SEARCH OFF: either mid way for testorderID 1 or at end for testOrderID 0");
+
+      searchOn = 0;
+
+      feedbackQuestionElement.innerHTML = currentQuestion.value = feeedbackWithoutSearchQuestions[currentFeedbackQuestionIndex][0]
+
+      if (feeedbackWithoutSearchQuestions[currentFeedbackQuestionIndex][1] == 0) {
+        showFeedbackOptions();
+      }
+      else {
+        showFeedbackFrq();
+      }
+    }
   }
 
   /**
@@ -509,23 +580,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentQuestionObj = data2DArray[currentQuestionIndex];
 
     let options = currentQuestionObj["question_options"];
-    if(typeof options == "string")
-      {
+    if(typeof options == "string") {
       options = JSON.parse(currentQuestionObj["question_options"]);
-      }
+    }
       
     const questionId = currentQuestionObj["question_id"];
     const questionText = currentQuestionObj["question_text"];
     const answerType = currentQuestionObj["answer_type"];
     const questionAnswer = currentQuestionObj["correct_ans"];
-    const chartEndpoint = currentQuestionObj["chart_endpoint"];
     const filterOptions = currentQuestionObj["filter_options"];
       
     // Assign value to the question text
     questionElement.textContent = currentQuestion.value = `Question ${currentQuestionIndex + 1}: ${questionText}`;
 
     currentQuestionId = questionId;
-    // currentQuestionName = questionName;
     currentCorrectAnswer = questionAnswer;
 
     
@@ -561,26 +629,58 @@ document.addEventListener('DOMContentLoaded', () => {
 	 *  - Updates user data
 	 *  - Submits user records
 	 */
-	async function handlePostStudyFeedbackSubmit() {
-		let feedback = null;
-		const feedbackText = postStudyFeedback.value;
+  async function handleFeedbackSubmit() {
+    let inputValue = null;
 
-		if (!feedbackText) {
-			alert("Please enter an answer.");
-			return;
-		} else {
-			feedback = feedbackText;
-		}
+    if ((searchOn == 1 && feeedbackWithSearchQuestions[currentFeedbackQuestionIndex][1] == 0) || (searchOn == 0 && feeedbackWithoutSearchQuestions[currentFeedbackQuestionIndex][1] == 0)) {
+      inputValue = $('input[type="radio"]:checked').val();
+      clearFeedbackOptions();
 
-		console.log(feedback);
+    }
+    else {
+      inputValue = feedbackFrqElement.value;
+      clearFeedbackFrq();
+    }
 
-		await updateUser(userId, {
-			feedback: feedback,
-		});
-		
-		await recordInteraction(userId, "FeedbackSubmit", true, false, 17, "User feedback", feedback);
+    if (!inputValue) {
+      alert("Please enter an answer.");
+      currentAnswer.value = null;
+      return;
+    } else {
+      currentAnswer.value = inputValue;
+    }
 
-		hideFeedback();
-	}
-  
+    await recordInteraction(userId, "FeedbackSubmit", true, false, currentFeedbackQuestionIndex, currentQuestion, currentAnswer);
+    await recordFeedbackResponse(userId, currentQuestion, currentAnswer, searchOn);
+
+    currentFeedbackQuestionIndex++;
+    hideFeedbackFrq();
+    hideFeedbackOptions();
+
+    if (currentFeedbackQuestionIndex < 5 && searchOn == 0) { //feedback without search
+      displayNextFeedbackQuestion();
+    }
+    else if (currentFeedbackQuestionIndex < 7 && searchOn == 1) { //feedback with search
+      displayNextFeedbackQuestion();
+    }
+    else if (currentQuestionIndex >= 15) { //Reached end of main study and second feedback questionaire
+      console.log("second feedback finished, showing post study congrats");
+      hideFeedbackAboutSearch();
+      showPostStudyCongrats();
+    }
+    else {
+      hideFeedbackAboutSearch();
+
+      //show respective search on/off screen for HALFWAY checkpoint
+
+      if (searchOn == 0 ) { //if search was off last, it will be turn on. show enabled search screen
+        console.log("feedback about search off finished, showing search on")
+        showSearchEnabledScreen();
+      }
+      else { //if search was on last, it will be turn off. show disabled 
+        console.log("feedback about search on finished, showing search off.")
+        showSearchDisabledScreen();
+      }
+    }
+  }  
 });

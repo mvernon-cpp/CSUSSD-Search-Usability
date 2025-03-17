@@ -14,5 +14,6 @@ router.get('/test-questions/:id', controller.getAllQuestions);
 router.post('/submit-mainstudy-response', controller.postMainStudyResponse);
 router.post('/submit-prestudy-response', controller.postPreStudyResponse);
 router.post('/submit-user-interaction', controller.postUserInteraction);
+router.post('/submit-feedback-response', controller.postFeedbackResponse);
 
 module.exports = router;

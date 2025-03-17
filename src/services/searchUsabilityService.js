@@ -1,4 +1,5 @@
 const PreStudyResponse = require('../models/PrestudyResponse');
+const FeedbackResponse = require('../models/FeedbackResponse');
 const MainStudyResponse = require('../models/MainstudyResponse');
 const UserInteraction = require('../models/UserInteraction');
 
@@ -24,6 +25,17 @@ class ResponseService {
 			return response;
 		} catch (error) {
 			console.error("Error adding pre study response:", error);
+			throw error;
+		}
+	}
+
+	// Add a Feedback Response
+	async insertFeedbackResponse(data) {
+		try {
+			const response = await FeedbackResponse.create(data);
+			return response;
+		} catch (error) {
+			console.error("Error adding feedback response:", error);
 			throw error;
 		}
 	}

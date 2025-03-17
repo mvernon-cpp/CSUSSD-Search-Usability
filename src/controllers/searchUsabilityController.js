@@ -74,12 +74,24 @@ class searchUsabilityController {
 
     // Method to add a pre-study response
     async postPreStudyResponse(req, res) {
-        const responseData = req.body; 
+        const responseData = req.body;
         try {
             const response = await responseService.insertPrestudyResponse(responseData);
             return res.status(201).json(response);
         } catch (error) {
             console.error("Error adding pre study response:", error);
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
+    }
+
+    // Method to add a feedback response
+    async postFeedbackResponse(req, res) {
+        const responseData = req.body;
+        try {
+            const response = await responseService.insertFeedbackResponse(responseData);
+            return res.status(201).json(response);
+        } catch (error) {
+            console.error("Error adding feedback response:", error);
             return res.status(500).json({ message: "Internal Server Error" });
         }
     }

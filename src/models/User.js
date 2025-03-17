@@ -27,10 +27,6 @@ User.init({
 		allowNull: false,
 		defaultValue: 0
 	},
-	feedback: {
-		type: DataTypes.STRING,
-		allowNull: false
-	},
 }, {
 	sequelize,
 	modelName: 'User',
