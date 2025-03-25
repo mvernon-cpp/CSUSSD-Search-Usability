@@ -3,19 +3,19 @@
     {
         "question_id": "GI4",
         "chart_endpoint": "graduation-initiative/student-advancement",
-        "filter_options": "CSU  System, 2021, Freshmen,6-Year Grad Goal",
-        "question_text": "What percantage of 1st years switched their majors in 2016?",
-        "question_options": ["0.16","0.18","0.17","0.14"],
-        "correct_ans": "0.16",
+        "filter_options": "*CSU System, 2020, Freshmen, 4-Year Grad Goal",
+        "question_text": "What is the 2020 4-year grad goal point gap for Freshmen to acheive Sophomore status at 1 year in the CSU System?",
+        "question_options": ["5","6","8","4"],
+        "correct_ans": "8",
         "answer_type": "multiple_choice"
     },
     {
         "question_id": "GI6",
         "chart_endpoint": "graduation-initiative/students-who-leave",
-        "filter_options": "CSU System, All Campuses, 2018",
-        "question_text": "How many students left in their 2nd year?",
-        "question_options": ["2660 students","3120 students","4989 students","9374 students"],
-        "correct_ans": "4989 students",
+        "filter_options": "*CSU System, All Campuses, 2018",
+        "question_text": "How many students left in their 2nd year during the 2018 cohort in the CSU System?",
+        "question_options": ["2,660 students","3,120 students","4,974 students","9,374 students"],
+        "correct_ans": "4,974 students",
         "answer_type": "multiple_choice"
     },
     
@@ -23,8 +23,8 @@
         "question_id": "GI9",
         "chart_endpoint": "graduation-initiative/where-do-they-struggle",
         "filter_options": "Pomona, All Colleges, Last 3 Academic Years",
-        "question_text": "Which of these courses was not in the top 3 for the number of students with non-passing grades.",
-        "question_options": ["COM1100","MAT2520","STA1200","MAT2140"],
+        "question_text": "Which of these courses was not in the top 3 for the number of students with non-passing grades at Pomona across all colleges in the last 3 academic years.",
+        "question_options": ["HST2202","MAT2520","STA1200","MAT1250"],
         "correct_ans": "MAT2520",
         "answer_type": "multiple_choice"
     },
@@ -32,7 +32,7 @@
         "question_id": "GI10",
         "chart_endpoint": "graduation-initiative/post-baccalaureate",
         "filter_options": "CSU System, All Colleges, Academic Year 2019-20",
-        "question_text": "CSU Long Beach is the top attended university",
+        "question_text": "CSU Long Beach is the top attended university for postgraduate studies throughout the CSU System for the 2019-20 academic year.",
         "question_options": ["TRUE","FALSE"],
         "correct_ans": "TRUE",
         "answer_type": "true_false"
@@ -41,27 +41,27 @@
         "question_id": "CSUBTN3",
         "chart_endpoint": "csu-by-the-numbers/enrolling-and-graduating",
         "filter_options": "Pomona, 2024, Freshmen, All Students, Male and Female",
-        "question_text": "How many people who applied eventually enrolled for Pomona 2024?",
-        "question_options": ["0.1","0.12","0.15","0.2"],
-        "correct_ans": "0.12",
+        "question_text": "Out of all types of freshmen, how many people who applied eventually enrolled for Pomona 2024?",
+        "question_options": ["10%","12%","15%","2%"],
+        "correct_ans": "12%",
         "answer_type": "multiple_choice"
     },
     {
         "question_id": "CSUBTN7",
         "chart_endpoint": "csu-by-the-numbers/historical-grad-rates",
         "filter_options": "CSU System, All colleges and schools, freshmen, 1st year persistence,race/ethnicity",
-        "question_text": "What is the 2020 1st year persistence percentage rate for Pacific Islander students?",
-        "question_options": ["0.825","0.911","0.796","0.685"],
-        "correct_ans": "0.825",
+        "question_text": "What is the 2020 1st year persistence percentage rate for Pacific Islander students amognst freshmen in the CSU System?",
+        "question_options": ["68.5%","91.1%","79.6%","82.5%"],
+        "correct_ans": "82.5%",
         "answer_type": "multiple_choice"
     },
     {
         "question_id": "CSUBTN12",
         "chart_endpoint": "csu-by-the-numbers/student-disabilities",
-        "filter_options": "Pomona, Freshmen, 2022",
+        "filter_options": "Pomona, Freshmen, 2020",
         "question_text": "What percentage of freshmen students reported having learning disability in Pomona 2020?",
-        "question_options": ["0.122","0.081","0.324","0.266"],
-        "correct_ans": "0.122",
+        "question_options": ["12.2%","8.1%","32.4%","26.6%"],
+        "correct_ans": "12.2%",
         "answer_type": "multiple_choice"
     },
     {
@@ -69,7 +69,7 @@
         "chart_endpoint": "csu-by-the-numbers/feeder-schools",
         "filter_options": "Pomona, Transfers, Female",
         "question_text": "What is the top feeder school for Pomona's female transfers?",
-        "question_options": ["Mount San Antonio College","Citrus Community College","Chaffey Community College","Pasadena City College"],
+        "question_options": ["Citrus Community College","Mount San Antonio College","Chaffey Community College","Pasadena City College"],
         "correct_ans": "Mount San Antonio College",
         "answer_type": "multiple_choice"
     },
@@ -77,34 +77,34 @@
         "question_id": "DD1",
         "chart_endpoint": "departments-dashboard/who-are-my-students",
         "filter_options": "Pomona, All Colleges, All Majors, 2024 - Fall",
-        "question_text": "What was the female enrollment percentage for Pomona in 2024 Fall?",
-        "question_options": ["0.44","32","0.56","0.65"],
-        "correct_ans": "0.44",
+        "question_text": "What was the female enrollment percentage for Pomona across all colleges and majors in 2024 Fall?",
+        "question_options": ["65%","32%","56%","44%"],
+        "correct_ans": "44%",
         "answer_type": "multiple_choice"
     },
     {
         "question_id": "DD4",
         "chart_endpoint": "departments-dashboard/student-progress-units",
         "filter_options": "Pomona, College of Science, All Majors, 2023, Transfers",
-        "question_text": "What was the dropout rate for transfers enrolled in Pomona College of Science 2023?",
-        "question_options": ["0.06","0","0.1","0.12"],
-        "correct_ans": "0.06",
+        "question_text": "What was the dropout rate for transfers enrolled in Pomona for all majors in the College of Science during the 2023 cohort?",
+        "question_options": ["0%","6%","1%","12%"],
+        "correct_ans": "6%",
         "answer_type": "multiple_choice"
     },
     {
         "question_id": "DD7",
         "chart_endpoint": "departments-dashboard/what-paths-do-they-follow",
-        "filter_options": "Pomona, College of Science, By College, To College, 2022 to 2025",
+        "filter_options": "Pomona, College of Science, By College, To College, 2022 to 2024",
         "question_text": "From 2022 to 2024 in Pomona, how many students began in the College of Engineering and graduated from the College of Science?",
-        "question_options": ["105","100","53","79"],
-        "correct_ans": "105",
+        "question_options": ["105 students","100 students","53 students","79 students"],
+        "correct_ans": "105 students",
         "answer_type": "multiple_choice"
     },
     {
         "question_id": "DD12",
         "chart_endpoint": "departments-dashboard/academic-outcomes",
-        "filter_options": "Pomona, College of Science, All Majors, Freshmen, 2021",
-        "question_text": "What was the average GPA at graduation for Pomona campuswide, students graduating in 4 years for the 2020 cohort?",
+        "filter_options": "Pomona, College of Science, All Majors, Freshmen, 2020",
+        "question_text": "What was the average GPA at graduation for Pomona campuswide in 2020 amongst students graduating in 4 years?",
         "question_options": ["3.49","3.54","3.3","3.75"],
         "correct_ans": "3.49",
         "answer_type": "multiple_choice"
@@ -112,8 +112,8 @@
     {
         "question_id": "EQ1",
         "chart_endpoint": "equity-gaps/my-equity-gaps",
-        "filter_options": "CSU System, Freshmen, 6th Year Graduation, First generation",
-        "question_text": "In order to close the equity gap for Pomona's First-generation freshmen, 94 more students need to graduate for the 6th year graduation gap",
+        "filter_options": "Pomona, Freshmen, 6th Year Graduation, First generation",
+        "question_text": "In order to close the equity gap for Pomona's first-generation freshmen, 94 more students need to graduate for the 6th year graduation gap",
         "question_options": ["TRUE","FALSE"],
         "correct_ans": "TRUE",
         "answer_type": "true_false"
@@ -124,19 +124,19 @@
         "filter_options": "Pomona, All Colleges, Pell Gap, 2020, Junior status within 2 years",
         "question_text": "At what rate did 2020 Pell entering Freshmen earned junior status within 2 years?",
         "question_options": [
-            "0.43",
-            "0.57",
-            "0.35",
-            "0.6"
+            "60%",
+            "57%",
+            "35%",
+            "43%"
         ],
-        "correct_ans": "0.43",
+        "correct_ans": "43%",
         "answer_type": "multiple_choice"
     },
     {
         "question_id": "EQ3",
         "chart_endpoint": "equity-gaps/achievement-gaps-gpa",
         "filter_options": "Pomona, Freshmen/Sophomores, First-Generation, 2021 - Academic Year, Largest GPA Gap, 20, (no upper limit)",
-        "question_text": "Which course had the highest GPA equity gap in 2021?",
+        "question_text": "For the first-generation freshmen & sophomores in Pomona, which course had the highest GPA equity gap in 2021?",
         "question_options": [
            "COM2206",
            "EWS1051",
@@ -151,7 +151,7 @@
         "question_id": "EQ6",
         "chart_endpoint": "equity-gaps/faculty-diversity",
         "filter_options": "CSU System, 2022, Instructional Faculty - All, All Ranks (Aggregated)",
-        "question_text": "What is the point difference between all of the Latinx instructional faculty and students diversity?",
+        "question_text": "What is the diversity point difference between all of the Latinx instructional faculty and students in the CSU System for 2022?",
         "question_options": ["-36","34","-4","1"],
         "correct_ans": "34",
         "answer_type": "multiple_choice"
