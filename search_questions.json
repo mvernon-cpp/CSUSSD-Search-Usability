@@ -58,7 +58,7 @@
         "question_id": "EQ2",
         "chart_endpoint": "equity-gaps/earning-junior-status",
         "filter_options": "Pomona, All Colleges, Pell Gap, 2020, Junior status within 2 years",
-        "question_text": "At what rate did 2020 Pell entering Freshmen earned junior status within 2 years?",
+        "question_text": "At what rate did 2020 Pell entering Freshmen earned junior status within 2 years from Pomona?",
         "question_options": [
             "60%",
             "57%",

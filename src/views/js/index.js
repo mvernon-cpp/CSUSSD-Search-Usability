@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
     await recordInteraction(userId, "Submit", false, true, currentQuestionId, currentQuestion, currentAnswer);
     inputElement.value = "";
   
-    if (currentPrestudyQuestionIndex < 6) {
+    if (currentPrestudyQuestionIndex < 7) {
       displayNextPrestudyQuestion();
     }
     else {
@@ -512,6 +512,8 @@ document.addEventListener('DOMContentLoaded', () => {
       prestudyChart.appendChild(imageElement);
     }
 
+
+
     currentPrestudyQuestionIndex++;
   }
 
@@ -558,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		//Set iframe source to homepage for each question - resets view
 
 		$(document).ready(function () {
-			if (currentQuestionIndex <= 4) {
+			if (currentQuestionIndex <= 3) {
 				if (testOrderId == 0) {
 					updateIFrame(CSUSSD_URL_SEARCH_ON);
 				}
@@ -567,7 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 			}
 
-			if (currentQuestionIndex > 4) {
+			if (currentQuestionIndex > 3) {
 				if (testOrderId == 0) {
 					updateIFrame(CSUSSD_URL_SEARCH_OFF);
 				}

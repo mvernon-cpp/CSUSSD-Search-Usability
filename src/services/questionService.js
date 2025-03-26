@@ -13,29 +13,20 @@ class QuestionService {
 
             let questionOrder = (userId % 2 == 1) ? questionOrdersJSON["questionOrders"]["firstOrder"] :
                 questionOrdersJSON["questionOrders"]["secondOrder"];
-            
-            
-            //===========================================================================
 
-            // questionOrder = questionOrder.slice(0,3);
-            // console.log("question order slice", questionOrder)
-
-            //===========================================================================
-
+            let questionSet = [];
             
-            const questionSet = await Question.findAll({
-                where: {
-                    id: {
-                        [Op.in]: questionOrder
+            for (let index = 0; index < questionOrder.length; index++) {
+                let q = await Question.findOne({
+                    where: {
+                        id: questionOrder[index]
                     }
-                }
-            });
+                });
 
-            const orderedQuestionSet = questionSet.sort((a, b) => {
-                return questionOrder.indexOf(a.question_id) - questionOrder.indexOf(b.question_id);
-            });
+                questionSet.push(q);
+            }
             
-            const formattedQuestions = orderedQuestionSet.map(question => {
+            const formattedQuestions = questionSet.map(question => {
                 return {
                     id: question.id,
                     question_id: question.question_id,

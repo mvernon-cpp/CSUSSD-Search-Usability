@@ -173,6 +173,10 @@
   #input {
   }
 
+  #feedback-frq {
+    resize: none;
+  }
+
   /* #submit-button {
     //margin-top: 10px;
   } */
