@@ -1,6 +1,8 @@
 export const prestudyQuestions = [
     ["What is your age?", null],
     ["What is your major?", null],
+    ["How often do you use the CSU Student Success Dashboard?" +
+    " <br><br> Please enter an answer from the following: Never, Occasionally, Frequently.", null],
     [
       "The graph above shows the percentage of people who die from different types of cancer." +
         "<br><br>About what percentage of people who die from cancer die from cancer B, cancer C, and cancer D combined?",
