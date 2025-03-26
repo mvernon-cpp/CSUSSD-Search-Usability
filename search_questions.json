@@ -18,43 +18,6 @@
         "correct_ans": "4,974 students",
         "answer_type": "multiple_choice"
     },
-    
-    {
-        "question_id": "GI9",
-        "chart_endpoint": "graduation-initiative/where-do-they-struggle",
-        "filter_options": "Pomona, All Colleges, Last 3 Academic Years",
-        "question_text": "Which of these courses was not in the top 3 for the number of students with non-passing grades at Pomona across all colleges in the last 3 academic years.",
-        "question_options": ["HST2202","MAT2520","STA1200","MAT1250"],
-        "correct_ans": "MAT2520",
-        "answer_type": "multiple_choice"
-    },
-    {
-        "question_id": "GI10",
-        "chart_endpoint": "graduation-initiative/post-baccalaureate",
-        "filter_options": "CSU System, All Colleges, Academic Year 2019-20",
-        "question_text": "CSU Long Beach is the top attended university for postgraduate studies throughout the CSU System for the 2019-20 academic year.",
-        "question_options": ["TRUE","FALSE"],
-        "correct_ans": "TRUE",
-        "answer_type": "true_false"
-    },
-    {
-        "question_id": "CSUBTN3",
-        "chart_endpoint": "csu-by-the-numbers/enrolling-and-graduating",
-        "filter_options": "Pomona, 2024, Freshmen, All Students, Male and Female",
-        "question_text": "Out of all types of freshmen, how many people who applied eventually enrolled for Pomona 2024?",
-        "question_options": ["10%","12%","15%","2%"],
-        "correct_ans": "12%",
-        "answer_type": "multiple_choice"
-    },
-    {
-        "question_id": "CSUBTN7",
-        "chart_endpoint": "csu-by-the-numbers/historical-grad-rates",
-        "filter_options": "CSU System, All colleges and schools, freshmen, 1st year persistence,race/ethnicity",
-        "question_text": "What is the 2020 1st year persistence percentage rate for Pacific Islander students amognst freshmen in the CSU System?",
-        "question_options": ["68.5%","91.1%","79.6%","82.5%"],
-        "correct_ans": "82.5%",
-        "answer_type": "multiple_choice"
-    },
     {
         "question_id": "CSUBTN12",
         "chart_endpoint": "csu-by-the-numbers/student-disabilities",
@@ -92,33 +55,6 @@
         "answer_type": "multiple_choice"
     },
     {
-        "question_id": "DD7",
-        "chart_endpoint": "departments-dashboard/what-paths-do-they-follow",
-        "filter_options": "Pomona, College of Science, By College, To College, 2022 to 2024",
-        "question_text": "From 2022 to 2024 in Pomona, how many students began in the College of Engineering and graduated from the College of Science?",
-        "question_options": ["105 students","100 students","53 students","79 students"],
-        "correct_ans": "105 students",
-        "answer_type": "multiple_choice"
-    },
-    {
-        "question_id": "DD12",
-        "chart_endpoint": "departments-dashboard/academic-outcomes",
-        "filter_options": "Pomona, College of Science, All Majors, Freshmen, 2020",
-        "question_text": "What was the average GPA at graduation for Pomona campuswide in 2020 amongst students graduating in 4 years?",
-        "question_options": ["3.49","3.54","3.3","3.75"],
-        "correct_ans": "3.49",
-        "answer_type": "multiple_choice"
-    },
-    {
-        "question_id": "EQ1",
-        "chart_endpoint": "equity-gaps/my-equity-gaps",
-        "filter_options": "Pomona, Freshmen, 6th Year Graduation, First generation",
-        "question_text": "In order to close the equity gap for Pomona's first-generation freshmen, 94 more students need to graduate for the 6th year graduation gap",
-        "question_options": ["TRUE","FALSE"],
-        "correct_ans": "TRUE",
-        "answer_type": "true_false"
-    },
-    {
         "question_id": "EQ2",
         "chart_endpoint": "equity-gaps/earning-junior-status",
         "filter_options": "Pomona, All Colleges, Pell Gap, 2020, Junior status within 2 years",
@@ -144,16 +80,6 @@
            "ARC1501A"
         ],
         "correct_ans": "COM2206",
-        "answer_type": "multiple_choice"
-    },
-    
-    {
-        "question_id": "EQ6",
-        "chart_endpoint": "equity-gaps/faculty-diversity",
-        "filter_options": "CSU System, 2022, Instructional Faculty - All, All Ranks (Aggregated)",
-        "question_text": "What is the diversity point difference between all of the Latinx instructional faculty and students in the CSU System for 2022?",
-        "question_options": ["-36","34","-4","1"],
-        "correct_ans": "34",
         "answer_type": "multiple_choice"
     }
 ]

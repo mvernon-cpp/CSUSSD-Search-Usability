@@ -444,14 +444,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       currentQuestionIndex++;
 			
-			if (currentQuestionIndex == 8 && testOrderId == 0)
+			if (currentQuestionIndex == 4 && testOrderId == 0)
 			{
         hideMainStudyScreen();
 
         showFeedbackAboutSearch();
         displayNextFeedbackQuestion();
 			}
-			else if(currentQuestionIndex == 8 && testOrderId == 1)
+			else if(currentQuestionIndex == 4 && testOrderId == 1)
 			{
         hideMainStudyScreen();
 
@@ -520,7 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function displayNextFeedbackQuestion() {
 
-    if ((currentQuestionIndex <= 8 && testOrderId == 0) || (currentQuestionIndex >= 15 && testOrderId == 1)) {
+    if ((currentQuestionIndex <= 4 && testOrderId == 0) || (currentQuestionIndex >= 7 && testOrderId == 1)) {
       // console.log("SEARCH ON: either mid way for testorderID 0 or at end for testOrderID 1");
       searchOn = 1;
 
@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     
-    if ((currentQuestionIndex <= 8 && testOrderId == 1) || (currentQuestionIndex >= 15 && testOrderId == 0)) {
+    if ((currentQuestionIndex <= 4 && testOrderId == 1) || (currentQuestionIndex >= 7 && testOrderId == 0)) {
       // console.log("SEARCH OFF: either mid way for testorderID 1 or at end for testOrderID 0");
 
       searchOn = 0;
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		//Set iframe source to homepage for each question - resets view
 
 		$(document).ready(function () {
-			if (currentQuestionIndex <= 7) {
+			if (currentQuestionIndex <= 4) {
 				if (testOrderId == 0) {
 					updateIFrame(CSUSSD_URL_SEARCH_ON);
 				}
@@ -567,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 			}
 
-			if (currentQuestionIndex > 7) {
+			if (currentQuestionIndex > 4) {
 				if (testOrderId == 0) {
 					updateIFrame(CSUSSD_URL_SEARCH_OFF);
 				}
@@ -663,7 +663,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (currentFeedbackQuestionIndex < 7 && searchOn == 1) { //feedback with search
       displayNextFeedbackQuestion();
     }
-    else if (currentQuestionIndex >= 15) { //Reached end of main study and second feedback questionaire
+    else if (currentQuestionIndex >= 7) { //Reached end of main study and second feedback questionaire
       console.log("second feedback finished, showing post study congrats");
       hideFeedbackAboutSearch();
       showPostStudyCongrats();
